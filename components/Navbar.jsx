@@ -1,12 +1,9 @@
-// TODO: find a way to remove the eslint-disables
-/* eslint-disable jsx-a11y/label-has-associated-control */
-/* eslint-disable jsx-a11y/no-noninteractive-tabindex */
 import Link from 'next/link';
 import Image from 'next/image';
 import SampleImage from '../public/dp_image183-1160.jpg';
 
 const Navbar = () => (
-  <div className="navbar bg-base-100">
+  <nav className="navbar bg-base-100 sticky top-0 z-50 p-0">
     <div className="flex-1">
       <Link href="/" className="btn btn-ghost p-0 normal-case text-xl">
         Hologomi
@@ -48,7 +45,7 @@ const Navbar = () => (
         </ul>
       </div>
     </div>
-  </div>
+  </nav>
 );
 
 export default Navbar;

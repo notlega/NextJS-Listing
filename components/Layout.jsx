@@ -2,10 +2,10 @@ import PropTypes from 'prop-types';
 import Navbar from './Navbar';
 
 const Layout = ({ children }) => (
-  <>
+  <div className="space-y-8">
     <Navbar />
-    <main className="container mx-auto">{children}</main>
-  </>
+    <main>{children}</main>
+  </div>
 );
 
 Layout.propTypes = {

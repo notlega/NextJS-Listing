@@ -3,7 +3,7 @@ import { Html, Head, Main, NextScript } from 'next/document';
 const Document = () => (
   <Html>
     <Head />
-    <body className="bg-base-100 mx-4 mt-2">
+    <body className="xl:mx-auto max-w-screen-xl mx-6 bg-base-100 mt-2">
       <Main />
       <NextScript />
     </body>
