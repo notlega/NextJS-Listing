@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSupabaseClient } from '@supabase/auth-helpers-react';
 import { useQuery } from 'react-query';
 import Skeleton from 'react-loading-skeleton';
@@ -27,14 +27,19 @@ const Home = () => {
     refetch: listingsRefetch,
   } = useQuery(
     'get_listings',
-    async () => supabaseClient.rpc('get_listings', { limit: 10, offset: 0 }),
+    async () => supabaseClient.rpc('get_listings', { listing_limit: 10, listing_offset: 0 }),
     {
       refetchOnMount: false,
       refetchOnWindowFocus: false,
       refetchOnReconnect: false,
-      onSuccess: (data) => setListings(data),
+      onSuccess: (data) => setListings(data.data),
     }
   );
+
+  // TODO: remove testing useeffect
+  useEffect(() => {
+    console.log(listings);
+  }, [listings]);
 
   return (
     <div className="space-y-8">
@@ -45,46 +50,22 @@ const Home = () => {
         </button>
       </div>
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-y-4 gap-x-2">
-        <ButtonCard
-          username="username"
-          userProfilePicture={SampleImage}
-          postedDate="today"
-          listingImage={SampleImage}
-          listingTitle="new listing"
-          listingPrice={273}
-          listingQuality="Brand New"
-          onClickFunction={onClickConsoleLog}
-        />
-        <ButtonCard
-          username="username"
-          userProfilePicture={SampleImage}
-          postedDate="today"
-          listingImage={SampleImage}
-          listingTitle="new listing"
-          listingPrice={273}
-          listingQuality="Brand New"
-          onClickFunction={onClickConsoleLog}
-        />
-        <ButtonCard
-          username="username"
-          userProfilePicture={SampleImage}
-          postedDate="today"
-          listingImage={SampleImage}
-          listingTitle="new listing"
-          listingPrice={273}
-          listingQuality="Brand New"
-          onClickFunction={onClickConsoleLog}
-        />
-        <ButtonCard
-          username="username"
-          userProfilePicture={SampleImage}
-          postedDate="today"
-          listingImage={SampleImage}
-          listingTitle="new listing"
-          listingPrice={273}
-          listingQuality="Brand New"
-          onClickFunction={onClickConsoleLog}
-        />
+        {!listingsLoading &&
+          !listingsError &&
+          listingsStatus === 'success' &&
+          listings.map((listing) => (
+            <ButtonCard
+              key={listing.id}
+              username="username"
+              userProfilePicture={SampleImage}
+              postedDate={listing.created_at}
+              listingImage={SampleImage}
+              listingTitle={listing.name}
+              listingPrice={listing.price}
+              listingQuality="Brand New"
+              onClickFunction={onClickConsoleLog}
+            />
+          ))}
       </div>
     </div>
   );
