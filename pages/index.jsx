@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useSupabaseClient } from '@supabase/auth-helpers-react';
 import { useQuery } from 'react-query';
 import Skeleton from 'react-loading-skeleton';
-import Card from '../components/ButtonCard';
+import ButtonCard from '../components/ButtonCard';
 import SampleImage from '../public/dp_image183-1160.jpg';
 
 const Home = () => {
@@ -10,9 +10,15 @@ const Home = () => {
 
   const [listings, setListings] = useState([]);
 
-	const onClickConsoleLog = () => {
-		console.log('clicked');
-	}
+  const onClickConsoleLog = () => {
+    console.log('clicked');
+  };
+
+  const onKeyboardRClick = (event) => {
+    if (event.key.toLowerCase() === 'r') {
+      listingsRefetch();
+    }
+  };
 
   const {
     isError: listingsError,
@@ -31,15 +37,15 @@ const Home = () => {
   );
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-8">
       <div className="flex flex-row justify-between items-center">
         <h1 className="text-3xl">Listings</h1>
-        <button className="btn btn-primary" onClick={listingsRefetch}>
-          Refresh
+        <button className="btn btn-primary" onClick={listingsRefetch} onKeyDown={onKeyboardRClick}>
+          Refresh (R)
         </button>
       </div>
-      <div className="flex flex-row justify-between items-center">
-        <Card
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-y-4 gap-x-2">
+        <ButtonCard
           username="username"
           userProfilePicture={SampleImage}
           postedDate="today"
@@ -47,9 +53,9 @@ const Home = () => {
           listingTitle="new listing"
           listingPrice={273}
           listingQuality="Brand New"
-					onClickFunction={onClickConsoleLog}
+          onClickFunction={onClickConsoleLog}
         />
-        <Card
+        <ButtonCard
           username="username"
           userProfilePicture={SampleImage}
           postedDate="today"
@@ -57,9 +63,9 @@ const Home = () => {
           listingTitle="new listing"
           listingPrice={273}
           listingQuality="Brand New"
-					onClickFunction={onClickConsoleLog}
+          onClickFunction={onClickConsoleLog}
         />
-				<Card
+        <ButtonCard
           username="username"
           userProfilePicture={SampleImage}
           postedDate="today"
@@ -67,7 +73,17 @@ const Home = () => {
           listingTitle="new listing"
           listingPrice={273}
           listingQuality="Brand New"
-					onClickFunction={onClickConsoleLog}
+          onClickFunction={onClickConsoleLog}
+        />
+        <ButtonCard
+          username="username"
+          userProfilePicture={SampleImage}
+          postedDate="today"
+          listingImage={SampleImage}
+          listingTitle="new listing"
+          listingPrice={273}
+          listingQuality="Brand New"
+          onClickFunction={onClickConsoleLog}
         />
       </div>
     </div>

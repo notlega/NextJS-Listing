@@ -11,7 +11,7 @@ const ButtonCard = ({
   listingQuality,
   onClickFunction,
 }) => (
-  <button className="card w-96 bg-base-100 hover:shadow-2xl" onClick={onClickFunction}>
+  <button className="card w-full bg-base-100 hover:shadow-2xl" onClick={onClickFunction}>
     <figure className='p-1'>
       <Image src={listingImage} alt={listingTitle} className="rounded-md" />
     </figure>
